@@ -1,11 +1,11 @@
-from holerite.src.exceptions.funcionario_not_found_erro import FuncionarioNotFoundError
+from exceptions.funcionario_not_found_erro import FuncionarioNotFoundError
 import mysql.connector
-from holerite.src.entities.funcionarios import Funcionarios
+from entities.funcionarios import Funcionarios
 
 
 class CadastroFuncionario():
 
-    def incluir_funcionario(self, funcionario: Funcionarios) -> None:
+    def incluir(self, funcionario: Funcionarios) -> None:
         cnx = mysql.connector.connect(user='root', password='Decode27@',
                                       host='127.0.0.1',
                                       database='holerite_xpto')
@@ -27,15 +27,15 @@ class CadastroFuncionario():
         cursor.close()
         cnx.close()
 
-    def excluir_funcionario(self,  matricula: str) -> None:
+    def excluir(self,  matricula: str) -> None:
         cnx = mysql.connector.connect(user='root', password='Decode27@',
                                       host='127.0.0.1',
                                       database='holerite_xpto')
         cursor = cnx.cursor()
 
-        self.consultar_funcionario()
+        self.consultar()
 
-        query = ("DELETE FROM funcionarios, WHERE matricula=%s")
+        query = ("DELETE FROM funcionarios WHERE matricula=%s")
 
         cursor.execute(query, [matricula])
 
@@ -44,7 +44,7 @@ class CadastroFuncionario():
         cursor.close()
         cnx.close()
 
-    def consultar_funcionario(self,  matricula: str) -> Funcionarios:
+    def consultar(self,  matricula: str) -> Funcionarios:
         cnx = mysql.connector.connect(user='root', password='Decode27@',
                                       host='127.0.0.1',
                                       database='holerite_xpto')
@@ -71,7 +71,7 @@ class CadastroFuncionario():
 
         return funcionario
 
-    def alterar_nome_funcionario(self, matricula: str) -> None:
+    def alterar(self, matricula: str) -> None:
         cnx = mysql.connector.connect(user='root', password='Decode27@',
                                       host='127.0.0.1',
                                       database='holerite_xpto')

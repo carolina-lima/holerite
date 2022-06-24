@@ -1,6 +1,6 @@
 class Funcionarios():
 
-    def __init__(self, matricula: str, nome: str, cpf: str, admissao: None, cargo: str, comissao: bool):
+    def __init__(self, matricula: int, nome: str, cpf: str, admissao: None, cargo: str, comissao: bool):
         self.__matricula = matricula
         self.__nome = nome
         self.__cpf = cpf
