@@ -1,6 +1,6 @@
-from exceptions.funcionario_not_found_erro import FuncionarioNotFoundError
+from src.exceptions.funcionario_not_found_erro import FuncionarioNotFoundError
 import mysql.connector
-from entities.funcionarios import Funcionarios
+from src.entities.funcionarios import Funcionarios
 
 
 class CadastroFuncionario():
