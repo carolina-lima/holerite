@@ -21,7 +21,7 @@ CREATE TABLE funcionarios (
     cpf CHAR(11) NOT NULL,
     admissao DATE NOT NULL,
     cargo VARCHAR(255) NOT NULL,
-    comissao ENUM('sim','nao') NOT NULL,
+    comissao VARCHAR(255) NOT NULL,
     primary key (matricula)
 );
 

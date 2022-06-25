@@ -13,6 +13,7 @@ def incluir_funcionario():
     dados = request.json
 
     funcionario = Funcionarios(
+        dados['matricula'],
         dados['nome'], 
         dados['cpf'], 
         dados['admissao'], 
