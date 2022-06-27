@@ -1,3 +1,4 @@
+from src.exceptions.cpf_duplicated_error import CpfDuplicatedError
 from src.exceptions.funcionario_not_found_erro import FuncionarioNotFoundError
 import mysql.connector
 from src.entities.funcionarios import Funcionarios
@@ -10,19 +11,32 @@ class CadastroFuncionario():
                                       host='127.0.0.1',
                                       database='holerite_xpto')
         cursor = cnx.cursor()
-        adiciona_funcionario = ("INSERT INTO funcionarios "
+
+        query_cpf =  ("SELECT cpf FROM funcionarios")
+        cursor.execute(query_cpf)
+        list_cpfs = [elemento[0] for elemento in cursor.fetchall()]
+
+        # compreensão de lista - list comprehension
+        # lista_cpf = []
+        # for elemento in cursor.fetchall():
+        #     lista_cpf.append(elemento[0])
+
+        if funcionario.cpf in list_cpfs:
+            raise CpfDuplicatedError("Funcionário já existente, tente de novo.")
+        else:
+            adiciona_funcionario = ("INSERT INTO funcionarios "
                             "(nome, cpf, admissao, cargo, comissao)"
                             " VALUES ( %(nome)s, %(cpf)s, %(admissao)s, %(cargo)s, %(comissao)s)")
 
-        cursor.execute(adiciona_funcionario, {
-            "nome": funcionario.nome,
-            "cpf": funcionario.cpf,
-            "admissao": funcionario.admissao,
-            "cargo": funcionario.cargo,
-            "comissao": funcionario.comissao,
-        })
-
-        cnx.commit()
+            cursor.execute(adiciona_funcionario, {
+                "nome": funcionario.nome,
+                "cpf": funcionario.cpf,
+                "admissao": funcionario.admissao,
+                "cargo": funcionario.cargo,
+                "comissao": funcionario.comissao,
+            })
+            cnx.commit()
+                
 
         cursor.close()
         cnx.close()
@@ -89,3 +103,11 @@ class CadastroFuncionario():
     
         cursor.close()
         cnx.close()
+
+
+# funcionario = Funcionarios(5464, "nome", "12345678", "2020-01-03", "cargo", "sim")
+# print(funcionario.nome)
+
+# cadastro_funcionario = CadastroFuncionario()
+# cadastro_funcionario.incluir(funcionario)
+

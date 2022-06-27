@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask import  jsonify, request
 from src.business.cadastro_funcionario import CadastroFuncionario
 from src.entities.funcionarios import Funcionarios
+from src.exceptions.cpf_duplicated_error import CpfDuplicatedError
 
 
 funcionario = Blueprint('funcionario',__name__)
@@ -20,8 +21,11 @@ def incluir_funcionario():
         dados['cargo'], 
         dados['comissao']
     )
-
-    cadastro_funcionario.incluir(funcionario)
+    
+    try:
+        cadastro_funcionario.incluir(funcionario)
+    except CpfDuplicatedError:
+        return "cpf duplicado", 400 #encontrar um return adequado
 
     return "ok", 201
 
